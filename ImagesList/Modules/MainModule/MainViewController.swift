@@ -11,11 +11,14 @@ class MainViewController: UIViewController {
     
     var presenter: MainPresenterLogic!
     
+    private var isImageLoaded = false
+    
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.delegate = self
         table.dataSource = self
         table.backgroundColor = .white
+        table.separatorInset = .zero
         table.register(ImageCell.self, forCellReuseIdentifier: ImageCell.reuseID)
         return table
     }()
@@ -46,6 +49,7 @@ class MainViewController: UIViewController {
 extension MainViewController: MainPresenterDelegate {
     
     func imagesDidFetch() {
+        isImageLoaded = true
         tableView.reloadData()
     }
     
@@ -58,6 +62,9 @@ extension MainViewController: MainPresenterDelegate {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if !presenter.encodeStoredImages.isEmpty && !isImageLoaded {
+            return presenter.encodeStoredImages.count
+        }
         return presenter.imagesList.count
     }
     
@@ -67,8 +74,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         else {
             return ImageCell()
         }
-        cell.set(image: nil, text: "Image Number: \(indexPath.row)")
+        if !presenter.encodeStoredImages.isEmpty && !isImageLoaded {
+            cell.set(fromStore: presenter.encodeStoredImages[indexPath.row])
+        } else {
+            let imageURL = presenter.imagesList[indexPath.row].url
+            cell.set(imageURL: imageURL, index: indexPath.row)
+        }
+ 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let imageFileManager = DIConteiner.shared.resolve(type: ImageModelFileManagerLogic.self)!
+        let image = imageFileManager.encodeImageItems[indexPath.row]
+        presenter.showDetail(imageItem: image)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

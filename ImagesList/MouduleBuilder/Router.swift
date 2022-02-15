@@ -11,6 +11,7 @@ protocol RouterLogic {
     var navigationController: UINavigationController { get set }
     var assemblyBuilder: AssemblyBuilderLogic { get set }
     func initMainController()
+    func showDetail(imageItem: StoreImage)
 }
 
 final class Router: RouterLogic {
@@ -26,6 +27,11 @@ final class Router: RouterLogic {
     func initMainController() {
         let mainViewController = assemblyBuilder.createMainModule(router: self)
         navigationController.viewControllers = [mainViewController]
+    }
+    
+    func showDetail(imageItem: StoreImage) {
+        let detailViewController = assemblyBuilder.createDetailModule(router: self, imageItem: imageItem)
+        navigationController.pushViewController(detailViewController, animated: true)
     }
     
     

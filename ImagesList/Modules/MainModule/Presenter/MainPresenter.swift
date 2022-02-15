@@ -15,7 +15,9 @@ protocol MainPresenterDelegate: AnyObject {
 protocol MainPresenterLogic: AnyObject {
     init(view: MainPresenterDelegate, router: RouterLogic, networkDataFetcher: NetworkDataFetcherLogic)
     var imagesList: [Image] { get set }
+    var encodeStoredImages: [StoreImage] { get }
     func getImagesList()
+    func showDetail(imageItem: StoreImage)
 }
 
 final class MainPresenter: MainPresenterLogic {
@@ -24,6 +26,10 @@ final class MainPresenter: MainPresenterLogic {
     var router: RouterLogic
     var imagesList: [Image] = .init()
     var networkDataFetcher: NetworkDataFetcherLogic
+    var encodeStoredImages: [StoreImage] {
+        let imageFileManager = DIConteiner.shared.resolve(type: ImageModelFileManagerLogic.self)!
+        return imageFileManager.encodeImageItems
+    }
     
     init(view: MainPresenterDelegate,
          router: RouterLogic = DIConteiner.shared.resolve(type: RouterLogic.self)!,
@@ -47,6 +53,10 @@ final class MainPresenter: MainPresenterLogic {
                 self.view?.imagesDidFetchError(error: error)
             }
         }
+    }
+    
+    func showDetail(imageItem: StoreImage) {
+        router.showDetail(imageItem: imageItem)
     }
     
     

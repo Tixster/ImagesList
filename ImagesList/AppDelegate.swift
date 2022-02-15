@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setup() {
+        let imageFileManager = ImageModelFileManager()
         let container = DIConteiner.shared
         let navigationController = UINavigationController()
         let assemblyBuilder = AssemblyBuilder()
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         container.register(type: AssemblyBuilderLogic.self, component: assemblyBuilder)
         container.register(type: RouterLogic.self, component: router)
         container.register(type: NetworkDataFetcherLogic.self, component: networkDataFethcer)
+        container.register(type: ImageModelFileManagerLogic.self, component: imageFileManager)
         router.initMainController()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController

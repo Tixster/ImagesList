@@ -9,7 +9,6 @@ import Foundation
 
 protocol Networking {
     func requestImagesList(url: URL, completion: @escaping ((Result<[Image], Error>) -> Void))
- //   func requestImage(url: URL, completion: @escaping (Result<>))
 }
 
 final class NetworkService: Networking {
