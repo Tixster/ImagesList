@@ -85,9 +85,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let imageFileManager = DIConteiner.shared.resolve(type: ImageModelFileManagerLogic.self)!
-        let image = imageFileManager.encodeImageItems[indexPath.row]
-        presenter.showDetail(imageItem: image)
+        let imageItem = presenter.encodeStoredImages[indexPath.row]
+        presenter.showDetail(imageItem: imageItem)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

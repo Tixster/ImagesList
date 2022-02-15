@@ -20,7 +20,6 @@ final class DIConteiner: DIContainerLogic {
     
     private var components: [String: Any] = .init()
     
-    
     func register<Component>(type: Component.Type, component: Any) {
         self.components["\(type)"] = component
     }

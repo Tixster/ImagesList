@@ -22,7 +22,7 @@ class CoderImage: CoderImageLogic {
     init() {
         createFolderIfNeeded()
     }
-
+    
     func encodeToJSON(_ item: StoreImage) {
         self.storeImageList.append(item)
         do {

@@ -34,8 +34,8 @@ class ImageCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.webImageView.frame = CGRect(origin: .zero,
-                                          size: CGSize(width: Size.width,
-                                                       height: Size.height))
+                                         size: CGSize(width: Size.width,
+                                                      height: Size.height))
     }
     
     override func prepareForReuse() {

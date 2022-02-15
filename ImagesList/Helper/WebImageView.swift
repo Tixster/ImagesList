@@ -30,7 +30,7 @@ class WebImageView: UIImageView {
             }
             dataTask.resume()
         }
-
+        
     }
     
     private func handleLoadedImage(data: Data, response: URLResponse, index: Int) {

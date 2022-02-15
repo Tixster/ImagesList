@@ -59,7 +59,4 @@ final class MainPresenter: MainPresenterLogic {
         router.showDetail(imageItem: imageItem)
     }
     
-    
-    
-    
 }
